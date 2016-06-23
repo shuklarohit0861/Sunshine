@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">sunshine</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_refresh" translatable="false">Refresh</string>
+    <string name="title_activity_detail">Details</string>  
+    <string name="pref_location_default" translatable="false">560037</string>
+    <string name="pref_location_key" translatable="false">LOCATION</string>
+    <string name="pref_location_label" translatable="false">Location</string>
+</resources>

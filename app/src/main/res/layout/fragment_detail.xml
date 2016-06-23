@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/activity_horizontal_margin"
+    tools:context="com.example.thero.sunshine.DetailActivity"
+    tools:showIn="@layout/activity_detail"
+    android:id="@+id/container"
+    android:orientation="horizontal"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/detail_text_view"
+        android:layout_gravity="top"
+        android:layout_marginTop="55dp"/>
+</LinearLayout>
