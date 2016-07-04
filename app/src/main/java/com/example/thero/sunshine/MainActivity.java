@@ -1,7 +1,10 @@
 package com.example.thero.sunshine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -39,8 +42,26 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(),SettingsActivity.class);
             startActivity(intent);
         }
+        if(id == R.id.action_map)
+        {
+           optGeoLocation();
+        }
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void optGeoLocation()
+    {
+        SharedPreferences sharedPreferencesMap = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String location = sharedPreferencesMap.getString(getString(R.string.pref_location_key),getString(R.string.pref_location_default));
+        Uri mapUri = Uri.parse("geo:0,0?q="+location);
+        Intent map = new Intent(Intent.ACTION_VIEW);
+        map.setData(mapUri);
+        if(map.resolveActivity(getPackageManager()) != null)
+        {
+            startActivity(map);
+        }
+
     }
 }

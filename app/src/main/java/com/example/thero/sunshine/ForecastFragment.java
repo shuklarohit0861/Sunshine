@@ -146,6 +146,17 @@ public class ForecastFragment extends Fragment {
          */
         private String formatHighLows(double high, double low) {
             // For presentation, assume the user doesn't care about tenths of a degree.
+
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String unit = sharedPreferences.getString(getString(R.string.pref_unit_key),getString(R.string.default_value_Metric));
+            if(!unit.equals(getString(R.string.default_value_Metric))) {
+
+                high = (high*1.8) +32;
+                low = (low *1.8)+32;
+
+            }
+
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
 
@@ -310,8 +321,10 @@ public class ForecastFragment extends Fragment {
             }
 
             try {
+
                 return getWeatherDataFromJson(forecastJsonStr, numDays);
-            } catch (JSONException e) {
+            }
+            catch (JSONException e) {
                              Log.e(LOG_TAG, e.getMessage(), e);
                                e.printStackTrace();
                          }

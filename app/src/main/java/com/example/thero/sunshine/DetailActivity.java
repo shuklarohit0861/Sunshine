@@ -3,7 +3,9 @@ package com.example.thero.sunshine;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,11 +17,14 @@ import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
 
+    private ShareActionProvider mShareActionProvider;
+    String details;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -32,7 +37,7 @@ public class DetailActivity extends AppCompatActivity {
         {
             return;
         }
-        String details = extra.getString("WEATHER");
+         details = extra.getString("WEATHER");
         TextView textView = (TextView) findViewById(R.id.detail_text_view);
         textView.setText(details);
         Log.v("DETAILS",details);
@@ -40,8 +45,19 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
+
         getMenuInflater().inflate(R.menu.detail, menu);
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuItem menuItem = menu.findItem(R.id.menu_item_shared);
+
+        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+
+
+        setmShareActionProvider(createIntent());
+
+
         return true;
     }
 
@@ -57,6 +73,8 @@ public class DetailActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(),SettingsActivity.class);
             startActivity(intent);
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -74,6 +92,22 @@ public class DetailActivity extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
             return rootView;
         }
+    }
+
+    public void setmShareActionProvider(Intent shareIntent)
+    {
+        if(mShareActionProvider != null)
+        {
+            mShareActionProvider.setShareIntent(shareIntent);
+        }
+    }
+
+    public Intent createIntent()
+    {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT,details+"#sunsineapp");
+        intent.setType("text/plain");
+        return intent;
     }
 
 
